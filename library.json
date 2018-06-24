@@ -24,7 +24,7 @@
 	  },
 	  {
 		"name": "eeprom",
-		"frameworks": "arduino"
+		"frameworks": "mbed"
 	  }
   ],
   "version": "0.1",

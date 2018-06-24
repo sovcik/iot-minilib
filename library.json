@@ -24,8 +24,7 @@
 	  {
 		"name": "eeprom",
 		"frameworks": "mbed"
-	  },
-
+	  }
   ],
   "export": {
 	"include":

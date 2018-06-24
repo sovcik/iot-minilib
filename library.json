@@ -26,12 +26,6 @@
 		"frameworks": "mbed"
 	  }
   ],
-  "export": {
-	"include":
-	[
-		"src/*"
-	]
-  },
   "version": "0.1",
   "frameworks": "mbed",
   "platforms": "atmelsam"

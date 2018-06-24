@@ -27,6 +27,10 @@
 	  }
   ],
   "version": "0.1",
-  "frameworks": "mbed",
-  "platforms": "atmelsam"
+  "frameworks": "arduino",
+  "platforms": [
+        "atmelavr", 
+        "espressif32", 
+        "espressif8266"
+  ]
 }

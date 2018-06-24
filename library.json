@@ -18,12 +18,13 @@
   "dependencies":
   [
 	  {
-		"name": "SoftwareSerial",
-		"frameworks": "mbed"
+		"name": "ESPSoftwareSerial",
+		"frameworks": "arduino",
+		"platforms": "espressif8266"
 	  },
 	  {
 		"name": "eeprom",
-		"frameworks": "mbed"
+		"frameworks": "arduino"
 	  }
   ],
   "version": "0.1",

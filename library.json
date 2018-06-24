@@ -31,7 +31,7 @@
 	[
 		"src/*"
 	]
-  }
+  },
   "version": "0.1",
   "frameworks": "mbed",
   "platforms": "atmelsam"

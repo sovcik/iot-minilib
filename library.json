@@ -1,0 +1,39 @@
+{
+  "name": "IoTMiniLib",
+  "keywords": "beeper, shiftout, printer, button",
+  "description": "Miscellaneous classes for Arduino/MCP development",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/sovcik/iotminilib.git"
+  },
+  "authors":
+  [
+    {
+      "name": "Jozef Sovcik",
+      "email": "jozef.sovcik@gmail.com",
+      "maintainer": true
+    }
+  ],
+  "dependencies":
+  [
+	  {
+		"name": "SoftwareSerial",
+		"frameworks": "mbed"
+	  },
+	  {
+		"name": "eeprom",
+		"frameworks": "mbed"
+	  },
+
+  ],
+  "export": {
+	"include":
+	[
+		"src/*"
+	]
+  }
+  "version": "0.1",
+  "frameworks": "mbed",
+  "platforms": "atmelsam"
+}

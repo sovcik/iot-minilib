@@ -4,7 +4,18 @@
 #include <debug_print.h>
 
 void Indicator::set(int s){
-    DEBUG_PRINT("[Indicator:set] val=%d\n",s);
+    DEBUG_PRINT("[Indicator:set] status=%d val=%d\n",status,s);
+    status = s;
+}
+
+void Indicator::enable(){
+    DEBUG_PRINT("[Indicator:enable] enabled\n");
+    enabled = true;
+}
+
+void Indicator::disable(){
+    DEBUG_PRINT("[Indicator:disable] disabled\n");
+    enabled = false;
 }
 
 LED_MonoColor::LED_MonoColor(BinaryOut* c1){

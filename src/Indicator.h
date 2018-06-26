@@ -13,9 +13,18 @@
 #define LED_DUO_ORANGE      3
 
 class Indicator {
+    protected:
+        int status;
+        bool enabled;
     public:
         virtual void set(int s);
         virtual ~Indicator(){};
+        int get() const {return status;}
+        virtual void show(){};
+        
+        void enable();
+        void disable();
+        bool isEnabled() const {return enabled;}
 };
 
 class LED_MonoColor : public Indicator {

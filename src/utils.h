@@ -3,11 +3,6 @@
 
 #include <Arduino.h>
 
-extern "C" {
-#include <cont.h>
-  extern cont_t g_cont;
-}
-
 uint32_t free_stack();
 uint32_t unmodified_stack();
 unsigned long mem_crc(void* obj, unsigned int size);

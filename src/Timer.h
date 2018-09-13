@@ -17,6 +17,7 @@ class Timer {
         void stop();
         bool isRunning() const;
         unsigned long getRunningTime() const;
+        unsigned long getRemainingTime() const;
         void restart();
         bool timeout();
 };

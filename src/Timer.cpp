@@ -39,12 +39,20 @@ void Timer::restart(){
 }
 
 bool Timer::timeout(){
-    return (millis()-startedAt > time);
+    return (!running || millis()-startedAt > time);
 }
 
 unsigned long Timer::getRunningTime() const {
     if (running)
         return (millis()-startedAt);
+    else
+        return 0;
+        
+}
+
+unsigned long Timer::getRemainingTime() const {
+    if (running)
+        return time-(millis()-startedAt);
     else
         return 0;
         

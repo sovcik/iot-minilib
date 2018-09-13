@@ -6,6 +6,13 @@
 #define NODEBUG_PRINT
 #include <debug_print.h>
 
+#if defined(ARDUINO_ESP8266_RELEASE_2_3_0) || defined(ARDUINO_ESP8266_RELEASE_2_4_0) || defined(ARDUINO_ESP8266_RELEASE_2_4_1)
+// All version before core 2.4.2
+extern "C" {
+#include <cont.h>
+extern cont_t g_cont;
+}
+
 uint32_t free_stack(){
     register uint32_t *sp asm("a1");
     return 4 * (sp - g_cont.stack);
@@ -14,6 +21,25 @@ uint32_t free_stack(){
 uint32_t unmodified_stack(){
     return cont_get_free_stack(&g_cont);
 }
+#else
+// All version from core 2.4.2
+// https://github.com/esp8266/Arduino/pull/5018
+// https://github.com/esp8266/Arduino/pull/4553
+ extern "C" {
+#include <cont.h>
+  extern cont_t* g_pcont;
+}
+
+uint32_t free_stack(){
+    register uint32_t *sp asm("a1");
+    return 4 * (sp - g_pcont->stack);
+}
+
+uint32_t unmodified_stack(){
+    return cont_get_free_stack(g_pcont);
+}
+
+#endif
 
 unsigned long mem_crc(void* obj, unsigned int size) {
   

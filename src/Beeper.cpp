@@ -42,11 +42,11 @@ void Beeper::doBeep(unsigned long waitTime){
     DEBUG_PRINT("[Beeper:doBeepN] ");
     do {
         delay(10);
-        doBeep();
+        loop();
     } while (millis()-w < waitTime);
 }
 
-void Beeper::doBeep(){
+void Beeper::loop(){
     if (beepCount < 1)
         return;
 

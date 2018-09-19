@@ -4,8 +4,9 @@
 #include <Arduino.h>
 #include "tones.h"
 #include <BinaryOut.h>
+#include <Looper.h>
 
-class Beeper {
+class Beeper : public Looper {
     protected:
         bool enabled;
         
@@ -28,7 +29,7 @@ class Beeper {
         void disable();
         bool isEnabled();
         void doBeep(unsigned long);     // blocking beeping
-        virtual void doBeep();          // non-blocking beeping
+        void loop() override;          // non-blocking beeping
     
 };
 

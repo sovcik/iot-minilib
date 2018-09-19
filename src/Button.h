@@ -3,8 +3,9 @@
 
 #include <Arduino.h>
 #include "Timer.h"
+#include <Looper.h>
 
-class Button {
+class Button : public Looper {
     protected:
         Timer upTimer = Timer(1000);
         Timer longTimer = Timer(5000);
@@ -27,7 +28,7 @@ class Button {
         virtual bool wasPushed(bool clear = false);
         virtual unsigned long getPushDuration() const;
         virtual int getPushCount() const;
-        virtual void loop();
+        void loop() override;
         virtual void setLabel(const char* label);
 };
 

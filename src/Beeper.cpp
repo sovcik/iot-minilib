@@ -31,7 +31,7 @@ void Beeper::beep(byte count){
         phase = 0;
         phaseStart = 0;
         phaseDuration = 0;
-        doBeep();
+        loop();
     } else {
         DEBUG_PRINT("[Beeper:beep] BEEP is OFF");
     }

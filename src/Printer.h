@@ -5,14 +5,10 @@
 
 #define PRINTER_MAX_BUFF_SIZE   (uint16_t)1024
 
-
-enum Printer_Status {
-    PRN_OFFLINE,
-    PRN_ONLINE,
-    PRN_ERROR,
-    PRN_PAPER_OUT
-};
-
+#define PRN_STAT_BIT_ERROR           0x01
+#define PRN_STAT_BIT_OFFLINE         0x02
+#define PRN_STAT_BIT_PAPER_OUT       0x04
+#define PRN_STAT_BIT_PAPER_ENDING    0x08
 
 struct PrnMacro {
     char* macro;
@@ -42,6 +38,7 @@ class Printer {
         uint8_t* buff;
         uint16_t buffUsed;
         char* codePage;
+        int _status;
 
     public:
         Printer(const char* id, const char* codePage);
@@ -67,6 +64,8 @@ class Printer {
         void replaceMacros();
         
         void replaceMacro(const char* s, uint8_t* value, uint16_t valueSize);
+
+        virtual int status(){return _status;};
 
 };
 

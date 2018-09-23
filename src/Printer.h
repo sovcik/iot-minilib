@@ -10,6 +10,13 @@
 #define PRN_STAT_BIT_PAPER_OUT       0x04
 #define PRN_STAT_BIT_PAPER_ENDING    0x08
 
+enum Printer_Status {
+    PRN_OFFLINE,
+    PRN_ONLINE,
+    PRN_ERROR,
+    PRN_PAPER_OUT
+};
+
 struct PrnMacro {
     char* macro;
     uint16_t offset;

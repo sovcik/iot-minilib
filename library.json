@@ -21,13 +21,9 @@
 		"name": "EspSoftwareSerial",
 		"frameworks": "arduino",
 		"platforms": "espressif8266"
-	  },
-	  {
-		"name": "eeprom",
-		"frameworks": "mbed"
 	  }
   ],
-  "version": "0.1",
+  "version": "1.22",
   "frameworks": "arduino",
   "platforms": [
         "atmelavr", 

@@ -1,7 +1,7 @@
 #include "Printer.h"
 #include <utils.h>
 
-#define NODEBUG_PRINT
+//#define NODEBUG_PRINT
 #include <debug_print.h>
 
 Printer::Printer(const char* id, const char* codePage){
@@ -100,6 +100,10 @@ void Printer::replaceMacros(){
 
 bool SerialPrinter::write(uint8_t* buff, uint16_t buffLen){
     DEBUG_PRINT("[SerialPrn:write] buffLen=%d data=\n",buffLen);
+    if (_status & PRN_STAT_BIT_OFFLINE){
+        DEBUG_PRINT("[SerialPrn:write] printer is offline\n");
+        return false;
+    }
     DEBUG_ARRAY(buff,buffLen);
     int w = ss->write(buff,buffLen); 
     DEBUG_PRINT("\n==data written=%d\n",w);
@@ -107,24 +111,43 @@ bool SerialPrinter::write(uint8_t* buff, uint16_t buffLen){
 }
 
 
-void SerialPrinter::print(char* s){
+size_t SerialPrinter::print(char* s){
     DEBUG_PRINT("[SerialPrn:print] %s\n",s);
-    ss->print(s);
+    if (_status & PRN_STAT_BIT_OFFLINE){
+        DEBUG_PRINT("[SerialPrn:print] printer is offline\n");
+        return 0;
+    }
+    return ss->print(s);
 }
 
-void SerialPrinter::print(int i){
+size_t SerialPrinter::print(int i){
     DEBUG_PRINT("[SerialPrn:print] %d\n",i);
-    ss->print(i);
+    if (_status & PRN_STAT_BIT_OFFLINE){
+        DEBUG_PRINT("[SerialPrn:print] printer is offline\n");
+        return 0;
+    }
+
+    return ss->print(i);
 }
 
-void SerialPrinter::println(char* s){
+size_t SerialPrinter::println(char* s){
     DEBUG_PRINT("[SerialPrn:println] %s\n",s);
-    ss->println(s);
+    if (_status & PRN_STAT_BIT_OFFLINE){
+        DEBUG_PRINT("[SerialPrn:println] printer is offline\n");
+        return 0;
+    }
+
+    return ss->println(s);
 }
 
-void SerialPrinter::println(int i){
+size_t SerialPrinter::println(int i){
     DEBUG_PRINT("[SerialPrn:println] %d\n",i);
-    ss->println(i);
+    if (_status & PRN_STAT_BIT_OFFLINE){
+        DEBUG_PRINT("[SerialPrn:println] printer is offline\n");
+        return 0;
+    }
+
+    return ss->println(i);
 }
 
 SerialPrinter::SerialPrinter(const char* id, const char* codePage, int rxPin, int txPin, unsigned int baudRate)
@@ -134,15 +157,46 @@ SerialPrinter::SerialPrinter(const char* id, const char* codePage, int rxPin, in
     this->txPin = txPin;
     this->baudRate = baudRate;
     ss = new SoftwareSerial(rxPin, txPin);
+    this->statusUpdate = new Timer(PRINTER_STATUS_FREQUENCY);
     DEBUG_PRINT("[SerialPrn] created\n");
 }
 
 SerialPrinter::~SerialPrinter(){
     //delete ss;
+    delete statusUpdate;
 }
 
 void SerialPrinter::begin(){
     DEBUG_PRINT("[SerialPrn:begin] \n");
     //----- start printer
     ss->begin(baudRate);
+}
+
+int SerialPrinter::writeWaitRead(uint8_t* buff, size_t size, uint32_t wait){
+    int _ps;
+    Timer rxTimer = Timer(wait);
+    rxTimer.start();
+
+    ss->write(buff,size);
+
+    while(!ss->available() && !rxTimer.timeout()){
+        delay(0);
+    };
+
+    if (ss->available()){
+        _ps = ss->read();
+    } else {
+        _ps = -1;
+    }
+
+    return _ps;
+
+}
+
+
+void SerialPrinter::loop(){
+    if (statusUpdate->timeout()){
+        updatePrinterStatus();
+        statusUpdate->restart();
+    }
 }

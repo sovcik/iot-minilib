@@ -1,7 +1,7 @@
 #include "Printer.h"
 #include <utils.h>
 
-//#define NODEBUG_PRINT
+#define NODEBUG_PRINT
 #include <debug_print.h>
 
 Printer::Printer(const char* id, const char* codePage){

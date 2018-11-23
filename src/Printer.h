@@ -81,6 +81,7 @@ class Printer : public Looper {
         
         void replaceMacro(const char* s, uint8_t* value, uint16_t valueSize);
 
+        virtual bool updatePrinterStatus()=0;
         virtual int status(){return _status;};
 
 };
@@ -94,7 +95,6 @@ class SerialPrinter : public Printer {
         Timer *statusUpdate;
 
         int writeWaitRead(uint8_t* buff, size_t size, uint32_t wait=100);
-        virtual void updatePrinterStatus()=0;
 
     public:
         SerialPrinter(const char* id, const char* codePage, int rxPin, int txPin, unsigned int baudRate);

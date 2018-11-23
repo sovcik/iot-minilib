@@ -66,9 +66,9 @@ class Printer : public Looper {
 
         virtual bool write(uint8_t* buff, uint16_t buffLen);
         
-        virtual size_t print(char* s) =0;
+        virtual size_t print(const char* s) =0;
         virtual size_t print(int i) =0;
-        virtual size_t println(char* s) =0;
+        virtual size_t println(const char* s) =0;
         virtual size_t println(int i) =0;
         
         void clearBuffer();
@@ -101,9 +101,9 @@ class SerialPrinter : public Printer {
         virtual ~SerialPrinter();
         virtual void begin() override;
         virtual bool write(uint8_t* buff, uint16_t buffLen) override;
-        virtual size_t print(char* s) override;
+        virtual size_t print(const char* s) override;
         virtual size_t print(int i) override;
-        virtual size_t println(char* s) override;
+        virtual size_t println(const char* s) override;
         virtual size_t println(int i) override;
 
         // from Looper class

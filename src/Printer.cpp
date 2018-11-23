@@ -111,7 +111,7 @@ bool SerialPrinter::write(uint8_t* buff, uint16_t buffLen){
 }
 
 
-size_t SerialPrinter::print(char* s){
+size_t SerialPrinter::print(const char* s){
     DEBUG_PRINT("[SerialPrn:print] %s\n",s);
     if (_status & PRN_STAT_BIT_OFFLINE){
         DEBUG_PRINT("[SerialPrn:print] printer is offline\n");
@@ -130,7 +130,7 @@ size_t SerialPrinter::print(int i){
     return ss->print(i);
 }
 
-size_t SerialPrinter::println(char* s){
+size_t SerialPrinter::println(const char* s){
     DEBUG_PRINT("[SerialPrn:println] %s\n",s);
     if (_status & PRN_STAT_BIT_OFFLINE){
         DEBUG_PRINT("[SerialPrn:println] printer is offline\n");

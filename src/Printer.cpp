@@ -12,6 +12,7 @@ Printer::Printer(const char* id, const char* codePage){
     
     buff = new uint8_t[PRINTER_MAX_BUFF_SIZE];
     buffUsed = 0;
+
 }
 
 Printer::~Printer(){
@@ -98,6 +99,22 @@ void Printer::replaceMacros(){
     
 }
 
+void Printer::startStatusUpdate(uint32_t interval){
+    statusTimer.start(interval);
+}
+
+void Printer::stopStatusUpdate(){
+    statusTimer.stop();
+}
+
+
+void Printer::loop(){
+    if (statusTimer.isRunning() && statusTimer.timeout()){
+        updatePrinterStatus();
+        statusTimer.restart();
+    }
+}
+
 bool SerialPrinter::write(uint8_t* buff, uint16_t buffLen){
     DEBUG_PRINT("[SerialPrn:write] buffLen=%d data=\n",buffLen);
     if (_status & PRN_STAT_BIT_OFFLINE){
@@ -157,13 +174,11 @@ SerialPrinter::SerialPrinter(const char* id, const char* codePage, int rxPin, in
     this->txPin = txPin;
     this->baudRate = baudRate;
     ss = new SoftwareSerial(rxPin, txPin);
-    this->statusUpdate = new Timer(PRINTER_STATUS_FREQUENCY);
     DEBUG_PRINT("[SerialPrn] created\n");
 }
 
 SerialPrinter::~SerialPrinter(){
     //delete ss;
-    delete statusUpdate;
 }
 
 void SerialPrinter::begin(){
@@ -191,12 +206,4 @@ int SerialPrinter::writeWaitRead(uint8_t* buff, size_t size, uint32_t wait){
 
     return _ps;
 
-}
-
-
-void SerialPrinter::loop(){
-    if (statusUpdate->timeout()){
-        updatePrinterStatus();
-        statusUpdate->restart();
-    }
 }

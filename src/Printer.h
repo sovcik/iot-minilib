@@ -16,8 +16,7 @@
 #define PRN_STAT_OTHER_ERROR            0x40
 #define PRN_STAT_UNRECOVERABLE_ERROR    0x80
 
-#define PRINTER_STATUS_FREQUENCY    10000
-#define PRINTER_STATUS_TIMEOUT      1000
+#define PRINTER_STATUS_TIMEOUT      1000        // expecting status reply from printer within this time
 
 enum Printer_Status {
     PRN_OFF,
@@ -55,6 +54,7 @@ class Printer : public Looper {
         uint16_t buffUsed;
         char* codePage;
         int _status;
+        Timer statusTimer;
 
     public:
         Printer(const char* id, const char* codePage);
@@ -81,8 +81,13 @@ class Printer : public Looper {
         
         void replaceMacro(const char* s, uint8_t* value, uint16_t valueSize);
 
+        void startStatusUpdate(uint32_t interval); // will start reqular printer status query 
+        void stopStatusUpdate();
         virtual bool updatePrinterStatus()=0;
         virtual int status(){return _status;};
+
+        // from Looper class
+        virtual void loop() override;  // loop handles regular status queries
 
 };
 
@@ -91,8 +96,6 @@ class SerialPrinter : public Printer {
         SoftwareSerial* ss;
         int rxPin, txPin;
         unsigned int baudRate;
-
-        Timer *statusUpdate;
 
         int writeWaitRead(uint8_t* buff, size_t size, uint32_t wait=100);
 
@@ -105,9 +108,6 @@ class SerialPrinter : public Printer {
         virtual size_t print(int i) override;
         virtual size_t println(const char* s) override;
         virtual size_t println(int i) override;
-
-        // from Looper class
-        virtual void loop() override;
     
 };
 

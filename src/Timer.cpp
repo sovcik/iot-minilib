@@ -2,7 +2,7 @@
 #include "Timer.h"
 
 Timer::Timer(){
-    time = 1000;
+    time = TIMER_DEFAULT_TIME;
     running = false;
 }
 
@@ -17,8 +17,7 @@ void Timer::set(unsigned long t){
 
 void Timer::start(unsigned long t){
     time = t;
-    startedAt = millis();
-    running = true;
+    start();
 }
 
 void Timer::start(){

@@ -1,6 +1,8 @@
 #ifndef __TIMER_H__
 #define __TIMER_H__
 
+#define TIMER_DEFAULT_TIME      1000 //if not specified, timer will be set to 1000ms
+
 class Timer {
     public:
         unsigned long time;

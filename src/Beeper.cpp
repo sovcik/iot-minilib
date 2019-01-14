@@ -103,14 +103,12 @@ bool Beeper::isEnabled(){
     return enabled;
 }
 
-PinBeeper::PinBeeper(byte pin){
+PinBeeper::PinBeeper(byte pin) : Beeper(){
     DEBUG_PRINT("[PinBeeper] creating beeper on gpio=%d\n",pin);
     beeperPin = pin;
-    enabled = true;
-    phase = 0;
     pinMode(beeperPin, OUTPUT);
-    BEEPER_PIN_WRITE(beeperPin, 0);
-    setBeep(NOTE_C1,500,200); // default beep
+    //BEEPER_PIN_WRITE(beeperPin, 0);
+
 }
 
 

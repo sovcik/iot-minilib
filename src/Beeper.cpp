@@ -27,13 +27,14 @@ void Beeper::setBeep(unsigned int pitch, unsigned int durationOn, unsigned int d
 
 void Beeper::beep(byte count){
     if (enabled) {
+        DEBUG_PRINT("[Beeper:beep] BEEP count=%d\n",count);
         beepCount = count;
         phase = 0;
         phaseStart = 0;
         phaseDuration = 0;
         loop();
     } else {
-        DEBUG_PRINT("[Beeper:beep] BEEP is OFF");
+        DEBUG_PRINT("[Beeper:beep] BEEP is OFF\n");
     }
 }
 
@@ -52,8 +53,12 @@ void Beeper::loop(){
 
     unsigned long now = millis();
 
-    if (now-phaseStart < phaseDuration)
+    if (now-phaseStart < phaseDuration){
+        DEBUG_PRINT("[Beeper:loop] now=%d ps=%d\n", now, phaseStart);
         return;
+    } else {
+        DEBUG_PRINT("b");
+    }
 
     switch (phase){
         case 0:
@@ -69,6 +74,8 @@ void Beeper::loop(){
             beepCount--;
             soundOff();
             break;
+        default:
+            DEBUG_PRINT("[Beeper:loop] phase=%d\n",phase);
     }
   
 }
@@ -108,12 +115,12 @@ PinBeeper::PinBeeper(byte pin){
 
 
 void PinBeeper::soundOn(){
-    DEBUG_PRINT("[PinBeeper:soudOn]\n");
+    DEBUG_PRINT("[PinBeeper:soundOn] pin=%d\n", beeperPin);
     digitalWrite(beeperPin,1);
 }
 
 void PinBeeper::soundOff(){
-    DEBUG_PRINT("[PinBeeper:soudOff]\n");
+    DEBUG_PRINT("[PinBeeper:soundOff] pin=%d\n", beeperPin);
     digitalWrite(beeperPin,0);
 }
 

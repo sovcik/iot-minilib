@@ -114,11 +114,16 @@ PinBeeper::PinBeeper(byte pin) : Beeper(){
 
 void PinBeeper::soundOn(){
     DEBUG_PRINT("[PinBeeper:soundOn] pin=%d\n", beeperPin);
+    pinMode(beeperPin, OUTPUT);
+    //BEEPER_PIN_WRITE(beeperPin, beepPitch);
+    //BEEPER_PIN_WRITE(beeperPin, 1);
     digitalWrite(beeperPin,1);
 }
 
 void PinBeeper::soundOff(){
     DEBUG_PRINT("[PinBeeper:soundOff] pin=%d\n", beeperPin);
+    pinMode(beeperPin, OUTPUT);
+    //BEEPER_PIN_WRITE(beeperPin, 0);
     digitalWrite(beeperPin,0);
 }
 

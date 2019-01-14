@@ -5,7 +5,7 @@
 #define NODEBUG_PRINT
 #include <debug_print.h>
 
-#define BEEPER_PIN_WRITE(...)   analogWrite( __VA_ARGS__ )
+#define BEEPER_PIN_WRITE(...)   digitalWrite( __VA_ARGS__ )
 
 Beeper::Beeper(){
     DEBUG_PRINT("[Beeper] creating beeper\n");
@@ -109,12 +109,12 @@ PinBeeper::PinBeeper(byte pin){
 
 void PinBeeper::soundOn(){
     DEBUG_PRINT("[PinBeeper:soudOn]\n");
-    BEEPER_PIN_WRITE(beeperPin, beepPitch);
+    digitalWrite(beeperPin,1);
 }
 
 void PinBeeper::soundOff(){
     DEBUG_PRINT("[PinBeeper:soudOff]\n");
-    BEEPER_PIN_WRITE(beeperPin, 0);
+    digitalWrite(beeperPin,0);
 }
 
 SHO_Beeper::SHO_Beeper(ShiftOutRegister* reg, uint8_t bit) : BOut_ShReg(reg, bit){

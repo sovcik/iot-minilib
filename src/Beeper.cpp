@@ -9,7 +9,7 @@
 
 Beeper::Beeper(){
     DEBUG_PRINT("[Beeper] creating beeper\n");
-    enabled = false;
+    enabled = true;
     phase = 0;
     setBeep(NOTE_C1,500,200); // default beep
 }

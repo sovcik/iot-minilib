@@ -5,27 +5,24 @@
 #define NODEBUG_PRINT
 #include <debug_print.h>
 
-#define BEEPER_PIN_WRITE(...)   digitalWrite( __VA_ARGS__ )
-
 Beeper::Beeper(){
     DEBUG_PRINT("[Beeper] creating beeper\n");
     enabled = true;
     phase = 0;
-    setBeep(NOTE_C1,500,200); // default beep
+    beepCount = 0;
+    setDuration(500,200); // default beep
 }
 
 Beeper::~Beeper(){
-    beepCount = 0;
     soundOff();
 }
 
-void Beeper::setBeep(unsigned int pitch, unsigned int durationOn, unsigned int durationOff){
-    beepPitch = pitch;
+void Beeper::setDuration(uint16_t durationOn, uint16_t durationOff){
     beepDurationOn = durationOn;
     beepDurationOff = durationOff; 
 }
 
-void Beeper::beep(byte count){
+void Beeper::beep(int8_t count){
     if (enabled) {
         DEBUG_PRINT("[Beeper:beep] BEEP count=%d\n",count);
         beepCount = count;
@@ -38,8 +35,8 @@ void Beeper::beep(byte count){
     }
 }
 
-void Beeper::doBeep(unsigned long waitTime){
-    unsigned long w = millis();
+void Beeper::doBeep(uint32_t waitTime){
+    uint32_t w = millis();
     DEBUG_PRINT("[Beeper:doBeepN] ");
     do {
         delay(10);
@@ -103,28 +100,44 @@ bool Beeper::isEnabled(){
     return enabled;
 }
 
-PinBeeper::PinBeeper(byte pin) : Beeper(){
+PinBeeper::PinBeeper(uint8_t pin) : Beeper(){
     DEBUG_PRINT("[PinBeeper] creating beeper on gpio=%d\n",pin);
     beeperPin = pin;
     pinMode(beeperPin, OUTPUT);
-    //BEEPER_PIN_WRITE(beeperPin, 0);
-
+    soundOff();
 }
-
 
 void PinBeeper::soundOn(){
     DEBUG_PRINT("[PinBeeper:soundOn] pin=%d\n", beeperPin);
-    pinMode(beeperPin, OUTPUT);
-    //BEEPER_PIN_WRITE(beeperPin, beepPitch);
-    //BEEPER_PIN_WRITE(beeperPin, 1);
     digitalWrite(beeperPin,1);
 }
 
 void PinBeeper::soundOff(){
     DEBUG_PRINT("[PinBeeper:soundOff] pin=%d\n", beeperPin);
-    pinMode(beeperPin, OUTPUT);
-    //BEEPER_PIN_WRITE(beeperPin, 0);
     digitalWrite(beeperPin,0);
+}
+
+PWMBeeper::PWMBeeper(uint8_t pin) : PinBeeper(pin){
+    DEBUG_PRINT("[PWMBeeper] creating beeper on gpio=%d\n",pin);
+    beeperPin = pin;
+    pinMode(beeperPin, OUTPUT);
+    soundOff();
+    setPitch(NOTE_A1);
+}
+
+void PWMBeeper::setPitch(uint16_t pitch){
+    DEBUG_PRINT("[PWMBeeper:setPitch] pitch=%d\n", pitch);
+    beepPitch = pitch;
+}
+
+void PWMBeeper::soundOn(){
+    DEBUG_PRINT("[PWMBeeper:soundOn] pin=%d\n", beeperPin);
+    analogWrite(beeperPin, beepPitch);
+}
+
+void PWMBeeper::soundOff(){
+    DEBUG_PRINT("[PWMBeeper:soundOff] pin=%d\n", beeperPin);
+    analogWrite(beeperPin, 0);
 }
 
 SHO_Beeper::SHO_Beeper(ShiftOutRegister* reg, uint8_t bit) : BOut_ShReg(reg, bit){

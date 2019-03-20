@@ -109,11 +109,13 @@ PinBeeper::PinBeeper(uint8_t pin) : Beeper(){
 
 void PinBeeper::soundOn(){
     DEBUG_PRINT("[PinBeeper:soundOn] pin=%d\n", beeperPin);
+    pinMode(beeperPin, OUTPUT);
     digitalWrite(beeperPin,1);
 }
 
 void PinBeeper::soundOff(){
     DEBUG_PRINT("[PinBeeper:soundOff] pin=%d\n", beeperPin);
+    pinMode(beeperPin, OUTPUT);
     digitalWrite(beeperPin,0);
 }
 
@@ -132,11 +134,13 @@ void PWMBeeper::setPitch(uint16_t pitch){
 
 void PWMBeeper::soundOn(){
     DEBUG_PRINT("[PWMBeeper:soundOn] pin=%d\n", beeperPin);
+    pinMode(beeperPin, OUTPUT);
     analogWrite(beeperPin, beepPitch);
 }
 
 void PWMBeeper::soundOff(){
     DEBUG_PRINT("[PWMBeeper:soundOff] pin=%d\n", beeperPin);
+    pinMode(beeperPin, OUTPUT);
     analogWrite(beeperPin, 0);
 }
 

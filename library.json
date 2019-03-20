@@ -23,7 +23,7 @@
 		"platforms": "espressif8266"
 	  }
   ],
-  "version": "1.25.0",
+  "version": "1.25.1",
   "frameworks": "arduino",
   "platforms": [
         "atmelavr", 

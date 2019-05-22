@@ -11,34 +11,38 @@ Timer::Timer(unsigned long t){
     running = false;
 }
 
-void Timer::set(unsigned long t){
+inline void Timer::set(unsigned long t){
     time = t;
 }
 
-void Timer::start(unsigned long t){
+inline void Timer::start(unsigned long t){
     time = t;
     start();
 }
 
-void Timer::start(){
+inline void Timer::start(){
     startedAt = millis();
     running = true;
 }
 
-void Timer::stop(){
+inline void Timer::stop(){
     running = false;
 }
 
-bool Timer::isRunning() const {
+inline bool Timer::isRunning() const {
     return running;
 }
 
-void Timer::restart(){
+inline void Timer::restart(){
     start();
 }
 
-bool Timer::timeout(){
-    return (!running || millis()-startedAt > time);
+inline void Timer::reset(){
+    startedAt = millis();
+}
+
+inline bool Timer::timeout(){
+    return (running && millis()-startedAt > time);
 }
 
 unsigned long Timer::getRunningTime() const {

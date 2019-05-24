@@ -13,18 +13,70 @@ class Timer {
 
     public:
 
+        /**
+         * Create timer using default interval. Do not start.
+         */
         Timer();                        // timer is created but not running
+
+        /**
+         * Create timer & specify interval. Do not start.
+         */
         Timer(unsigned long t);         // timer is created for specified interval but not running
-        void set(unsigned long t){time = t;};      // set timer interval
-        void start();                   // start timer
-        void start(unsigned long t);    // specify interval and start
-        void stop(){running = false;};                    // stop timer
+
+        /** 
+         * Set timer interal.
+         */
+        void set(unsigned long t){time = t;};
+
+        /**
+         * Start timer with preset interval
+         */
+        void start();
+
+        /**
+         * Set interval and start timer
+         */
+        void start(unsigned long t); 
+
+        /**
+         * Stop timer
+         */
+        void stop(){running = false;}; 
+
+        /**
+         * Is timer running?
+         */
         bool isRunning() const {return running;};
-        unsigned long getRunningTime() const;   // how long it has been running?
-        unsigned long getRemainingTime() const; // remaining time to timeout
-        void restart(){start();};   // restart timer - start if not running
-        void reset(){startedAt = millis();};     // resets start time - no impact if not running
-        bool timeout(){return (running && millis()-startedAt > time);};   // true if running and time elapsed
+
+        /**
+         * Elapsed time since start
+         */
+        unsigned long getRunningTime() const;
+
+        /**
+         * Remaining time till timeout
+         */
+        unsigned long getRemainingTime() const;
+
+        /**
+         * Reset & start timer
+         */
+        void restart(){start();}; 
+
+        /**
+         * Reset timer. No impact if timer is not running.
+         */
+        void reset(){startedAt = millis();}; 
+
+        /**
+         * Time elapsed?
+         */
+        bool timeout(){return (running && millis()-startedAt > time);}; 
+
+        /**
+         * Trigger timeout
+         */
+        void timeoutNow(){startedAt = millis()-time-100;};  //
 };
 
 #endif

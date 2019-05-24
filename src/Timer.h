@@ -22,9 +22,9 @@ class Timer {
         void set(unsigned long t){time = t;};
 
         /**
-         * Start timer with preset interval
+         * Start timer
          */
-        void start();
+        void start(){running = true;};
 
         /**
          * Set interval and start timer
@@ -54,7 +54,7 @@ class Timer {
         /**
          * Reset & start timer
          */
-        void restart(){start();}; 
+        void restart(){reset();start();}; 
 
         /**
          * Reset timer. No impact if timer is not running.

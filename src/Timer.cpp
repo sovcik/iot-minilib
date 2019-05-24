@@ -1,6 +1,11 @@
 #include <Arduino.h>
 #include "Timer.h"
 
+Timer::Timer(){
+    time = 1000;
+    running = false;
+}
+
 Timer::Timer(unsigned long t){
     time = t;
     running = false;

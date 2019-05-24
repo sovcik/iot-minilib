@@ -1,8 +1,6 @@
 #ifndef __TIMER_H__
 #define __TIMER_H__
 
-#define TIMER_DEFAULT_TIME      1000 //if not specified, timer will be set to 1000ms
-
 #include <Arduino.h>
 
 class Timer {
@@ -12,11 +10,6 @@ class Timer {
         bool running;
 
     public:
-
-        /**
-         * Create timer using default interval. Do not start.
-         */
-        Timer();                        // timer is created but not running
 
         /**
          * Create timer & specify interval. Do not start.

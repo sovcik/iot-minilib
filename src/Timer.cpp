@@ -1,11 +1,6 @@
 #include <Arduino.h>
 #include "Timer.h"
 
-Timer::Timer(){
-    time = TIMER_DEFAULT_TIME;
-    running = false;
-}
-
 Timer::Timer(unsigned long t){
     time = t;
     running = false;

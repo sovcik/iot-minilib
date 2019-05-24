@@ -5,8 +5,8 @@
 
 class Timer {
     public:
-        unsigned long time;
-        unsigned long startedAt;
+        uint32_t time;
+        uint32_t startedAt;
         bool running;
 
     public:
@@ -16,17 +16,23 @@ class Timer {
         /**
          * Create timer & specify interval. Do not start.
          */
-        Timer(unsigned long t);
+        Timer(uint32_t t);
 
         /** 
          * Set timer interal.
          */
-        void set(unsigned long t){time = t;};
+        void set(uint32_t t){time = t;};
 
         /**
-         * Start timer
+         * Start timer from zero
          */
-        void start(){running = true;};
+        inline void start(){restart();};
+
+
+        /**
+         * Set timer interval and start timer;
+         */
+        void start(uint32_t t){set(t);restart();};
 
         /**
          * Stop timer
@@ -34,9 +40,14 @@ class Timer {
         void stop(){running = false;}; 
 
         /**
+         * Resume timer
+         */
+        inline void resume(){running=true;};
+
+        /**
          * Is timer running?
          */
-        bool isRunning() const {return running;};
+        inline bool isRunning() const {return running;};
 
         /**
          * Elapsed time since start
@@ -51,7 +62,7 @@ class Timer {
         /**
          * Reset & start timer
          */
-        void restart(){reset();start();}; 
+        void restart(){reset();resume();}; 
 
         /**
          * Reset timer. No impact if timer is not running.
@@ -61,12 +72,12 @@ class Timer {
         /**
          * Time elapsed?
          */
-        bool timeout(){return (running && millis()-startedAt > time);}; 
+        inline bool timeout(){return (running && millis()-startedAt > time);}; 
 
         /**
          * Trigger timeout
          */
-        void timeoutNow(){startedAt = millis()-time-100;};  //
+        void triggerTimeout(){startedAt = millis()-time-100;};  //
 };
 
 #endif

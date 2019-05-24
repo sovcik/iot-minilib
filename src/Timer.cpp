@@ -6,7 +6,7 @@ Timer::Timer(){
     running = false;
 }
 
-Timer::Timer(unsigned long t){
+Timer::Timer(uint32_t t){
     time = t;
     running = false;
 }

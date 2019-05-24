@@ -11,10 +11,12 @@ class Timer {
 
     public:
 
+        Timer();
+
         /**
          * Create timer & specify interval. Do not start.
          */
-        Timer(unsigned long t);         // timer is created for specified interval but not running
+        Timer(unsigned long t);
 
         /** 
          * Set timer interal.
@@ -25,11 +27,6 @@ class Timer {
          * Start timer
          */
         void start(){running = true;};
-
-        /**
-         * Set interval and start timer
-         */
-        void start(unsigned long t); 
 
         /**
          * Stop timer

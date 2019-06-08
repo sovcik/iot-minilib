@@ -1,6 +1,10 @@
 #include <Arduino.h>
 #include "Beeper.h"
 
+#ifdef ESP32
+#define analogWrite ledcWrite
+#endif
+
 // uncomment/comment following line to stop/start debug print 
 #define NODEBUG_PRINT
 #include <debug_print.h>

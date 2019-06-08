@@ -6,6 +6,7 @@
 #define NODEBUG_PRINT
 #include <debug_print.h>
 
+#ifdef ESP8266
 #if defined(ARDUINO_ESP8266_RELEASE_2_3_0) || defined(ARDUINO_ESP8266_RELEASE_2_4_0) || defined(ARDUINO_ESP8266_RELEASE_2_4_1)
 // All version before core 2.4.2
 extern "C" {
@@ -30,6 +31,8 @@ uint32_t unmodified_stack(){
   extern cont_t* g_pcont;
 }
 
+#endif
+
 uint32_t free_stack(){
     register uint32_t *sp asm("a1");
     return 4 * (sp - g_pcont->stack);
@@ -37,6 +40,15 @@ uint32_t free_stack(){
 
 uint32_t unmodified_stack(){
     return cont_get_free_stack(g_pcont);
+}
+
+#else
+uint32_t free_stack(){
+    return -1;
+}
+
+uint32_t unmodified_stack(){
+    return -1;
 }
 
 #endif

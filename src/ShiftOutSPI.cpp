@@ -16,7 +16,7 @@ void SHOR_SPI::begin(){
     #endif
 
     #ifdef ESP32
-    SPI.begin(SPI_BUS_CLK, SPI_BUS_MISO, SPI_BUS_MOSI, SPI_BUS_SS);
+    SPI.begin();
     #endif
 
     SPI.setDataMode(SPI_MODE0);

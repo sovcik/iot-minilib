@@ -22,7 +22,7 @@
 
 //--
 
-#if !defined(NODEBUG_PRINT) && defined(CONSOLE_PORT)
+#if defined(CONSOLE_PORT)
 
 #define CONSOLE(...) CONSOLE_PORT.printf( __VA_ARGS__ )
 #define CONSOLE_ARRAY(ARR,ARR_L) for (uint16_t _aidx =0; _aidx<ARR_L;_aidx++) {CONSOLE_PORT.printf("%02X ",*(ARR+_aidx)); if (_aidx%20 == 19)CONSOLE_PORT.printf("\n");}
@@ -43,8 +43,5 @@
 
 #endif
 
-#ifndef NODEBUG_PRINT
-#define NODEBUG_PRINT
-#endif
 
 #endif

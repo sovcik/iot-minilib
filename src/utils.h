@@ -5,14 +5,14 @@
 
 uint32_t free_stack();
 uint32_t unmodified_stack();
-unsigned long mem_crc(void* obj, unsigned int size);
+unsigned long mem_crc(void* obj, size_t size);
 unsigned long getRandomLong();
-void getRandomHex(char* s, int length);
+void getRandomHex(char* s, size_t length);
 void splitUrl(const char* srcUrl, char* host, unsigned int &port, char* uri, int &useSSL);
 void mac2hex(char* dst, unsigned char* mac);
-int saveToEEPROM(unsigned int address, unsigned char* data, unsigned int size);
-int loadFromEEPROM(unsigned int address, unsigned char* dst, unsigned int size);
-uint16_t replaceBytes(uint8_t* buff, const uint16_t buffUsed, const uint16_t buffSize, const uint8_t* find, const uint16_t findSize, const uint8_t* replace, const uint16_t replaceSize);
-void printArray(uint8_t* a, uint16_t size);
+int saveToEEPROM(uint8_t address, uint8_t* data, size_t size);
+int loadFromEEPROM(uint8_t address, uint8_t* dst, size_t size);
+uint16_t replaceBytes(uint8_t* buff, const size_t buffUsed, const size_t buffSize, const uint8_t* find, const size_t findSize, const uint8_t* replace, const size_t replaceSize);
+void printArray(uint8_t* a, size_t size);
 
 #endif

@@ -53,7 +53,7 @@ uint32_t unmodified_stack(){
 
 #endif
 
-unsigned long mem_crc(void* obj, unsigned int size) {
+unsigned long mem_crc(void* obj, size_t size) {
   
     unsigned char* a;
     a = (unsigned char*)obj;
@@ -88,7 +88,7 @@ unsigned long getRandomLong() {
     return a;
 }
 
-void getRandomHex(char* s, int length){
+void getRandomHex(char* s, size_t length){
     char c[] = "0123456789ABDCEF";
     for(int i=0;i<length;i++){
         s[i]=c[random(15)];
@@ -152,7 +152,7 @@ void mac2hex(char* dst, unsigned char* mac){
     DEBUG_PRINT("[utils:MAC2HEX] hex=%s\n",dst);
 }
 
-int saveToEEPROM(unsigned int address, unsigned char* data, unsigned int size){
+int saveToEEPROM(uint8_t address, uint8_t* data, size_t size){
     unsigned long crc;
     int succ = 0;
     crc = mem_crc(data, size);
@@ -172,7 +172,7 @@ int saveToEEPROM(unsigned int address, unsigned char* data, unsigned int size){
     return succ;   
 }
 
-int loadFromEEPROM(unsigned int address, unsigned char* dst, unsigned int size){
+int loadFromEEPROM(uint8_t address, uint8_t* dst, size_t size){
     unsigned char* tmp = new unsigned char[size];
     
     unsigned long crcE;
@@ -202,7 +202,7 @@ int loadFromEEPROM(unsigned int address, unsigned char* dst, unsigned int size){
     
 }
 
-uint16_t replaceBytes(uint8_t* buff, const uint16_t buffUsed, const uint16_t buffSize, const uint8_t* find, const uint16_t findSize, const uint8_t* replace, const uint16_t replaceSize){
+uint16_t replaceBytes(uint8_t* buff, const size_t buffUsed, const size_t buffSize, const uint8_t* find, const size_t findSize, const uint8_t* replace, const size_t replaceSize){
     uint16_t bu = buffUsed;
     uint16_t i = 0;
     uint8_t* bp = buff;
@@ -234,7 +234,14 @@ uint16_t replaceBytes(uint8_t* buff, const uint16_t buffUsed, const uint16_t buf
     return bu;                                                                  // return used buffer size
 }
 
-void printArray(uint8_t* a, uint16_t size){
-    for (uint16_t i =0; i<size;i++)DEBUG_PRINT("%X ",*(a+i));
+void printArray(uint8_t* a, size_t size){
+    uint8_t j=0;
+    for (size_t i =0; i<size;i++){
+        DEBUG_PRINT("%X ",*(a+i));
+        if(++j>40){
+            j=0;
+            DEBUG_PRINT("\n");
+        }
+    }
 }
 

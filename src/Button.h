@@ -35,13 +35,15 @@ class Button : public Looper {
 class AnalogButton : public Button {
     protected:
         int pin;
+        int threshold; // value above which button is considered as "pushed down"
 
     public:
-        AnalogButton(const char* id, int pin) : Button(id) {
+        AnalogButton(const char* id, int pin, int threshold=500) : Button(id) {
             this->pin = pin;
+            this->threshold = threshold;
             pinMode(pin, INPUT);
         }
-        virtual bool isPressed() const override {return analogRead(pin)>500;};
+        virtual bool isPressed() const override {return analogRead(pin) > threshold;};
         
 };
 
@@ -57,6 +59,25 @@ class DigitalButton : public Button {
         virtual bool isPressed() const override {return digitalRead(pin);};
         
 };
+
+#ifdef ESP32
+
+class TouchButton : public Button {
+    protected:
+        int pin;
+        int threshold; // value BELOW which button is considered as "pushed down"
+
+    public:
+        TouchButton(const char* id, int pin, int threshold=20) : Button(id) {
+            this->pin = pin;
+            this->threshold = threshold;
+            pinMode(pin, INPUT);
+        }
+        virtual bool isPressed() const override {return touchRead(pin) < threshold;};
+        
+};
+
+#endif
 
 #endif
 

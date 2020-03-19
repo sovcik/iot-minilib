@@ -15,6 +15,8 @@ class Timer {
 
         /**
          * Create timer & specify interval. Do not start.
+         * 
+         * @t - timer interval in ms
          */
         Timer(uint32_t t);
 
@@ -31,6 +33,8 @@ class Timer {
 
         /**
          * Set timer interval and start timer;
+         * 
+         * @t - new timer interval
          */
         void start(uint32_t t){set(t);restart();};
 
@@ -41,6 +45,7 @@ class Timer {
 
         /**
          * Resume timer
+         * Timer status will be set to "running" after calling this method.
          */
         inline void resume(){running=true;};
 
@@ -50,12 +55,14 @@ class Timer {
         inline bool isRunning() const {return running;};
 
         /**
-         * Elapsed time since start
+         * Elapsed time since start.
+         * Returns zero if not running.
          */
         unsigned long getRunningTime() const;
 
         /**
          * Remaining time till timeout
+         * Returns zero if not running.
          */
         unsigned long getRemainingTime() const;
 
@@ -65,7 +72,8 @@ class Timer {
         void restart(){reset();resume();}; 
 
         /**
-         * Reset timer. No impact if timer is not running.
+         * Reset timer to start again from now.
+         * No impact if timer is not running.
          */
         void reset(){startedAt = millis();}; 
 
@@ -75,7 +83,8 @@ class Timer {
         inline bool timeout(){return (running && millis()-startedAt > time);}; 
 
         /**
-         * Trigger timeout
+         * Trigger timer timeout. 
+         * Next call of method timeout() will return true.
          */
         void triggerTimeout(){startedAt = millis()-time-100;};  //
 };

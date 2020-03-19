@@ -39,13 +39,12 @@ void Beeper::beep(int8_t count){
     }
 }
 
-void Beeper::doBeep(uint32_t waitTime){
-    uint32_t w = millis();
+void Beeper::doBeep(){
     DEBUG_PRINT("[Beeper:doBeepN] ");
     do {
         delay(10);
         loop();
-    } while (millis()-w < waitTime);
+    } while (beepCount > 0);
 }
 
 void Beeper::loop(){

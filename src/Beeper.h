@@ -20,18 +20,45 @@ class Beeper : public Looper {
     public:
         Beeper();
         virtual ~Beeper();
+
+        /**
+         * Set beep duration (in ms)
+         * 
+         * @durationOn - beep duration
+         * @durationOff - pause between beeps
+         */
         void setDuration(uint16_t durationOn, uint16_t durationOff);
+
+        /**
+         * Request beeper to beep. 
+         * Beeping itself has to be executed by calling loop() or doBeep() methods.
+         * 
+         * @count beep count
+         */
         void beep(int8_t count);
+
         virtual void soundOn();
         virtual void soundOff();
         void enable();
         void disable();
         bool isEnabled();
-        void doBeep(uint32_t waitTime);     // blocking beeping
+
+        /**
+         * Execute beeping - blocking other code until beeping finishes.
+         */
+        void doBeep();                 // do all beeping - blocks all other code until beeping is finished
+
+        /**
+         * Execute beeping - non-blocking
+         */
         void loop() override;          // non-blocking beeping
     
 };
 
+/**
+ * Beeper connected to a digital pin.
+ * Simple on/off beeping.
+ */
 class PinBeeper : public Beeper {
     protected:
         uint8_t beeperPin;
@@ -42,6 +69,10 @@ class PinBeeper : public Beeper {
         virtual void soundOff() override;
 };
 
+/**
+ * Beeper connected to PWM pin. 
+ * Allows setting tone pitch. See method setPitch()
+ */
 class PWMBeeper : public PinBeeper {
     protected:
         uint16_t beepPitch;
@@ -54,6 +85,9 @@ class PWMBeeper : public PinBeeper {
 };
 
 
+/**
+ * Pin beeper conneced to shift register
+ */
 class SHO_Beeper : public BOut_ShReg, public Beeper {
     public:
         SHO_Beeper(ShiftOutRegister* reg, uint8_t bit);

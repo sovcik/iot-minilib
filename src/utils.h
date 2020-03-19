@@ -46,6 +46,12 @@ int loadFromEEPROM(uint8_t address, uint8_t* dst, size_t size);
  */
 uint16_t replaceBytes(uint8_t* buff, const size_t buffUsed, const size_t buffSize, const uint8_t* find, const size_t findSize, const uint8_t* replace, const size_t replaceSize);
 
-void printArray(uint8_t* a, size_t size);
+/**
+ * Print buffer content in as hexadecimal to DEBUG_PORT
+ * 
+ * @buff - buffer to print
+ * @size - buffer size
+ */
+void printArray(uint8_t* buff, size_t size);
 
 #endif

@@ -53,21 +53,21 @@ uint32_t unmodified_stack(){
 
 #endif
 
-unsigned long mem_crc(void* obj, size_t size) {
+uint32_t mem_crc(void* obj, size_t size) {
   
-    unsigned char* a;
-    a = (unsigned char*)obj;
+    uint8_t* a;
+    a = (uint8_t*)obj;
 
-    const unsigned long crc_table[16] = {
+    const uint32_t crc_table[16] = {
       0x00000000, 0x1db71064, 0x3b6e20c8, 0x26d930ac,
       0x76dc4190, 0x6b6b51f4, 0x4db26158, 0x5005713c,
       0xedb88320, 0xf00f9344, 0xd6d6a3e8, 0xcb61b38c,
       0x9b64c2b0, 0x86d3d2d4, 0xa00ae278, 0xbdbdf21c
     };
 
-    unsigned long crc = ~0L;
+    uint32_t crc = ~0L;
 
-    for (unsigned int index = 0 ; index < size  ; ++index) {
+    for (uint32_t index = 0 ; index < size  ; ++index) {
         crc = crc_table[(crc ^ *(a+index)) & 0x0f] ^ (crc >> 4);
         crc = crc_table[(crc ^ (*(a+index) >> 4)) & 0x0f] ^ (crc >> 4);
         crc = ~crc;
@@ -75,13 +75,13 @@ unsigned long mem_crc(void* obj, size_t size) {
     return crc;
 }
 
-unsigned long getRandomLong() {
-    unsigned long a;
+uint32_t getRandomLong() {
+    uint32_t a;
   
     // simply getting random number between 2^24 and 2^32 did not work...
     // so let's do it byte-by-byte
     a = random(0xFF);     // first byte
-    for(int i=0;i<3;i++){ // and next 3 bytes
+    for(uint8_t i=0;i<3;i++){ // and next 3 bytes
         a <<= 8;
         a |= random(0xFF);
     }

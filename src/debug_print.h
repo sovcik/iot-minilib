@@ -6,7 +6,7 @@
 #define DEBUG_ARRAY(ARR,ARR_L) for (uint16_t _aidx =0; _aidx<ARR_L;_aidx++) {DEBUG_PORT.printf("%02X ",*(ARR+_aidx)); if (_aidx%20 == 19)DEBUG_PORT.printf("\n");}
 #define DEBUG_ARRAY_F(ARR,ARR_L,ARR_F) for (uint16_t _aidx =0; _aidx<ARR_L;_aidx++) {DEBUG_PORT.printf(ARR_F,*(ARR+_aidx)); if (_aidx%20 == 19)DEBUG_PORT.printf("\n");}
 
-#if defined(PGMSPACE_INCLUDE) || defined(_PGMSPACE_H_)
+#if defined(PGMSPACE_INCLUDE) || defined(PROGMEM)
 #define DEBUG_PRINT_PGM(...) DEBUG_PORT.printf_P( __VA_ARGS__ )
 #else 
 #define DEBUG_PRINT_PGM(...)
@@ -28,7 +28,7 @@
 #define CONSOLE_ARRAY(ARR,ARR_L) for (uint16_t _aidx =0; _aidx<ARR_L;_aidx++) {CONSOLE_PORT.printf("%02X ",*(ARR+_aidx)); if (_aidx%20 == 19)CONSOLE_PORT.printf("\n");}
 #define CONSOLE_ARRAY_F(ARR,ARR_L,ARR_F) for (uint16_t _aidx =0; _aidx<ARR_L;_aidx++) {CONSOLE_PORT.printf(ARR_F,*(ARR+_aidx)); if (_aidx%20 == 19)CONSOLE_PORT.printf("\n");}
 
-#if defined(PGMSPACE_INCLUDE) || defined(_PGMSPACE_H_)
+#if defined(PGMSPACE_INCLUDE) || defined(PROGMEM)
 #define CONSOLE_PGM(...) CONSOLE_PORT.printf_P( __VA_ARGS__ )
 #else
 #define CONSOLE_PGM(...)
